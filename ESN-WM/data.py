@@ -35,6 +35,8 @@ def smoothen(Z, window='hanning', length=25):
     Z = np.convolve(W/W.sum(), S, mode='valid')
     return 2*Z[(length//2-1):-(length//2)-1]
 
+def random_function():
+    return 1
 
 def generate_data(values, gates, last=None):
     """
