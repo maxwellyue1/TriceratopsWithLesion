@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 from data import generate_data, smoothen
 from model import generate_model, train_model, test_model
 
-
+def tuan():
+    return 2
+    
 if __name__ == '__main__':
     
     # Random generator initialization
