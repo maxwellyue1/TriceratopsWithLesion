@@ -36,7 +36,7 @@ def smoothen(Z, window='hanning', length=25):
     return 2*Z[(length//2-1):-(length//2)-1]
 
 def random_function():
-    return 10
+    return 1
 
 def generate_data(values, gates, last=None):
     """
