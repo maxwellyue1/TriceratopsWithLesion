@@ -9,7 +9,7 @@ import numpy as np
 from data import generate_data, smoothen, str_to_bmp
 
 def max(): 
-    return 
+    return 1
 
 
 def convert_data(data_, size):
