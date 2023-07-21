@@ -17,7 +17,6 @@ if __name__ == '__main__':
     fig.patch.set_alpha(0.0)
     n_subplots = 1
 
-    directory = "data/results"
     # -------------------------------------------------------------------------
     # 1-1-1 scalar task
     task = "1-1-1-scalar"
@@ -28,17 +27,18 @@ if __name__ == '__main__':
     np.random.seed(1)
 
     # Build memory
-    #builds a reservoir model with:
+    # builds a reservoir model with:
     #       1+n_gate input neurons
     #       1000 reservoir neurons
     #       n_gate output neurons
+    # See generate_model in model.py
     model = generate_model(shape=(1+n_gate,1000,n_gate),
                            sparsity=0.5, radius=0.1, scaling=(1.0,1.0),
                            leak=1.0, noise=(0.0000, 0.0001, 0.0001))
 
     # Making training data
     n = 25000 # 300000
-    values = np.random.uniform(-1, +1, n) #the input to the network
+    values = np.random.uniform(-1, +1, n) #the input to the network 
     ticks = np.random.uniform(0, 1, (n, n_gate)) < 0.01 #the gating indicators
     train_data = generate_data(values, ticks) #format the data
 
