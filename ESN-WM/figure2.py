@@ -8,6 +8,9 @@
 import numpy as np
 from data import generate_data, smoothen, str_to_bmp
 
+def max(): 
+    return 
+
 
 def convert_data(data_, size):
     values = (data_["input"][:, 0]).astype(int)
