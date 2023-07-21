@@ -237,54 +237,54 @@ if __name__ == '__main__':
 
 
     # -------------------------------------------------------------------------
-    # 1-1-1 digit task
-    task = "1-1-1-digit"
-    files = ["{:s}/{:s}_{:s}.npy".format(directory, task, var) for var in ["desired", "model", "state"]]
-    n_gate = 1
-    size = 11
-    print(task)
-    if not np.all([os.path.exists(f) for f in files]):
-        # Random generator initialization
-        np.random.seed(1)
+    # # 1-1-1 digit task
+    # task = "1-1-1-digit"
+    # files = ["{:s}/{:s}_{:s}.npy".format(directory, task, var) for var in ["desired", "model", "state"]]
+    # n_gate = 1
+    # size = 11
+    # print(task)
+    # if not np.all([os.path.exists(f) for f in files]):
+    #     # Random generator initialization
+    #     np.random.seed(1)
 
-        # Training data
-        n = 25000
-        values = np.random.randint(0, 10, n)
-        ticks = np.random.uniform(0, 1, (n, n_gate)) < 0.1
-        train_data_ = generate_data(values, ticks)
-        train_data = convert_data(train_data_, size, noise = 0.)
+    #     # Training data
+    #     n = 25000
+    #     values = np.random.randint(0, 10, n)
+    #     ticks = np.random.uniform(0, 1, (n, n_gate)) < 0.1
+    #     train_data_ = generate_data(values, ticks)
+    #     train_data = convert_data(train_data_, size, noise = 0.)
 
 
-        # Testing data
-        n = 50
-        values = np.random.randint(0, 10, n)
-        ticks = np.random.uniform(0, 1, (n, n_gate)) < 0.1
-        test_data_ = generate_data(values, ticks)
-        test_data = convert_data(test_data_, size, noise = 0.)
+    #     # Testing data
+    #     n = 50
+    #     values = np.random.randint(0, 10, n)
+    #     ticks = np.random.uniform(0, 1, (n, n_gate)) < 0.1
+    #     test_data_ = generate_data(values, ticks)
+    #     test_data = convert_data(test_data_, size, noise = 0.)
 
-        # Model
-        model = generate_model(shape=(train_data["input"].shape[1],1000,n_gate),
-                               sparsity=0.5,
-                               radius=0.1,
-                               scaling=(1.0, 1.0),
-                               leak=1.0,
-                               noise=0.0001)
+    #     # Model
+    #     model = generate_model(shape=(train_data["input"].shape[1],1000,n_gate),
+    #                            sparsity=0.5,
+    #                            radius=0.1,
+    #                            scaling=(1.0, 1.0),
+    #                            leak=1.0,
+    #                            noise=0.0001)
         
-        error = train_model(model, train_data)
-        print("Training error : {0}".format(error))
+    #     error = train_model(model, train_data)
+    #     print("Training error : {0}".format(error))
         
-        error = test_model(model, test_data)
-        print("Testing error : {0}".format(error))
-        np.save(files[0], test_data)
-        np.save(files[1], model["output"])
-        np.save(files[2], model["state"])
-    else:
-        test_data = np.load(files[0])
-        model = {}
-        model["output"] = np.load(files[1])
-        model["state"] = np.load(files[2])
-        error = np.sqrt(np.mean((model["output"] - test_data["output"])**2))
-        print("Testing error : {0}".format(error))
+    #     error = test_model(model, test_data)
+    #     print("Testing error : {0}".format(error))
+    #     np.save(files[0], test_data)
+    #     np.save(files[1], model["output"])
+    #     np.save(files[2], model["state"])
+    # else:
+    #     test_data = np.load(files[0])
+    #     model = {}
+    #     model["output"] = np.load(files[1])
+    #     model["state"] = np.load(files[2])
+    #     error = np.sqrt(np.mean((model["output"] - test_data["output"])**2))
+    #     print("Testing error : {0}".format(error))
 
 
     # Display
