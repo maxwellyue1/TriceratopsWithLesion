@@ -115,11 +115,15 @@ def train_model(model, data, seed=None):
         internals[i] = np.tanh(z) + noise_rc
         internals[i] = (1-leak)*internals[i-1] + leak*internals[i]
 
-    # Computing W_out over a subset of reservoir units
+    # Computing W_out over a subset of reservoir units 
+    # internals @ W_out = outputs 
+    # #W_out = inv(internals) @ outputs
     W_out = np.dot(np.linalg.pinv(internals), outputs).T
     error = np.sqrt(np.mean((np.dot(internals, W_out.T) - outputs)**2))
     model["W_out"] = W_out
     model["last_state"] = inputs[-1], internals[-1], outputs[-1]
+
+    np.save("train_internals.npy", internals)
     return error
 
 
@@ -167,6 +171,9 @@ def test_model(model, data, seed=None):
     model["input"] = inputs[1:]
     model["output"] = outputs[1:]
     error = np.sqrt(np.mean((model["output"] - data["output"])**2))
+
+    np.save("W_out.npy", model["W_out"])
+    np.save("test_internals.npy", internals)
 
     return error
 
