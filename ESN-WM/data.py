@@ -6,9 +6,8 @@
 # Distributed under the terms of the BSD License.
 # -----------------------------------------------------------------------------
 import numpy as np
-import freetype as ft
 import scipy.ndimage
-
+import freetype as ft
 
 def smoothen(Z, window='hanning', length=25):
     """
@@ -123,8 +122,7 @@ def str_to_bmp(text, size=11, zmin=1.0, zmax=1.0, add_kerning=False):
        I is a unidimensional numpy array that indicates the corresponding
        character for each column of Z
     """
-
-    # Load fonts
+ # Load fonts
     fonts = ["./Inconsolata-Regular.ttf"]
     faces = [ft.Face(filename) for filename in fonts]
     for face in faces:
