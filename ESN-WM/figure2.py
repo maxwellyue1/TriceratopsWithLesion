@@ -8,7 +8,6 @@
 import numpy as np
 from data import generate_data, smoothen, str_to_bmp
 
-
 def convert_data(data_, size):
     values = (data_["input"][:, 0]).astype(int)
     text = [chr(ord("0")+i) for i in values]
@@ -20,7 +19,6 @@ def convert_data(data_, size):
     data["input"][:,-1] = np.repeat(data_["input"][:, 1], n)
     data["output"][:, 0] = np.repeat(data_["output"], n) / 10
     return data
-
 
 def generate_data(values, gates, last=None):
     """
