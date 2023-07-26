@@ -7,7 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from data import generate_data, smoothen, str_to_bmp, convert_data 
-from model import generate_model, train_model, test_model
+from model_modified import generate_model, train_model, test_model
+from identify_neurons import identify_neurons
+from lesion import lesion
 import sys
 import os
 
@@ -45,8 +47,18 @@ if __name__ == '__main__':
     error = train_model(model, train_data)
     print("Training error : {0}".format(error))
 
-    error = test_model(model, test_data)
-    print("Testing error : {0}".format(error))
+    # identify the neurons to be lesioned
+    num_lesion_neurons = 1
+    neurons_lesion_dict = identify_neurons(model['W_out'], num_lesion_neurons)   # a dictionary of lesioned neurons, choices made on output/method
+    neurons_lesion = neurons_lesion_dict['random, output 2']
+
+    # lesion correspoing weights of selected neurons
+    lesioned_model = lesion(model, neurons_lesion)
+
+    error_wo_lesion = test_model(model, test_data, 42)
+    error_w_lesion = test_model(lesioned_model, test_data, 42)
+    print("Testing error without lesion : {0}".format(error_wo_lesion))
+    print("Testing error with lesion : {0}".format(error_w_lesion))
     # np.save(files[0], test_data)
     # np.save(files[1], model["output"])
     # np.save(files[2], model["state"])
@@ -72,6 +84,7 @@ if __name__ == '__main__':
         ax2.scatter(X, -1.05*Y-0.04*i, s=1.5, facecolors=C, edgecolors=None)
         ax2.plot(data["output"][:,i],  color='0.75', lw=1.0)
         ax2.plot(model["output"][:,i], lw=1.5, zorder=10)
+        ax2.plot(lesioned_model["output"][:,i], lw=1.5, zorder=10)
 
     ax2.text(-25, -1.05, "Ticks:",
              fontsize=8, transform=ax2.transData,
