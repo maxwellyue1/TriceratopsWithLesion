@@ -11,6 +11,7 @@ def lesion(model, neurons_lesion):
         model_lesion['W_rc'][neurons_lesion, :] = 0
         model_lesion['W_rc'][:, neurons_lesion] = 0
         model_lesion['W_fb'][neurons_lesion, :] = 0
-        #model_lesion['W_out'][:, neurons_lesion] = 0
+        if model_lesion['W_out'] != None:
+            model_lesion['W_out'][:, neurons_lesion] = 0
 
     return model_lesion
